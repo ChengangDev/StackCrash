@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Getting Started Extension's Popup</title>
+
+
+    </head>
+    <body>
+      <div>
+        <input type="text" id="block_page" class="input" value=""  size="30"/>
+        <input id="add_page" type="button" class="input_button green" value="" />
+        <div id="blockedlist"></div>
+      </div>
+
+      <hr />
+
+      <strong class="i18n" i18n="Export_Import"></strong>
+
+      <hr />
+
+      <div>
+        <label class="i18n" i18n="Export_CSV"></label> &nbsp;
+        <input type="button" id="export_button" value="" class="i18n" i18n="Export" />
+      </div>
+      <hr />
+
+      <div>
+        <label style="margin:18px 15px 0 0;float:left;" class="i18n" i18n="Import_CSV"></label>
+        <input type="file" id="import_file" /><br />
+        <input type="button" id="import_button" value="" style="margin-top:10px;" class="i18n" i18n="Import" />
+      </div>
+
+      <script src="js/popup.js"></script>
+
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="lib/jquery-3.2.1.min.js"></script>
+      <script src="lib/tether-1.3.3/dist/js/tether.min.js"></script>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="lib/bootstrap-4.0.0/js/bootstrap.min.js"></script>
+    </body>
+</html>
