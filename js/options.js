@@ -25,6 +25,42 @@ var onUpdTbl = function(){
 }
 
 
+var onServer = function(){
+
+    var server = $("#server").val();
+    var search = $("#search").val();
+
+    if(!server || !search){
+        alert("Error: No server or search input!");
+        return;
+    }
+
+    if(server.indexOf("https:") !== 0){
+        //server = "https://" + server;
+    }
+
+    chrome.storage.sync.set({'server':server, 'search':search }, function(){
+    });
+
+}
+
+
+var onSet = function(){
+
+    var username = $("#username").val();
+    var password = $('#password').val();
+
+    if(!username || !password){
+        alert("Error: No username or password input!");
+        return;
+    }
+
+
+    chrome.storage.sync.set({'username':username, 'password':password}, function(){
+    });
+
+}
+
 var onTrack = function(){
 
     var url = $("#hostname").val();
@@ -49,8 +85,6 @@ var onTrack = function(){
 
 
 }
-
-
 
 var onHistory = function(){
 
@@ -85,16 +119,22 @@ var onExport = function(){
 
 }
 
-
-
-
 $(document).ready(function(){
+
+    $( '#setser' ).click(onServer);
+
+    $( '#set' ).click(onSet);
 
     $( "#track" ).click(onTrack);
 
     $( "#history" ).on("click", onHistory);
 
-
+    chrome.storage.sync.get( ["server", "search", "username", "password"], function(user){
+        $( '#server' ).val(user.server);
+        $( '#search' ).val(user.search);
+        $( '#username' ).val(user.username);
+        $( '#password' ).val(user.password);
+    });
 
     onUpdTbl();
 });

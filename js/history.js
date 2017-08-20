@@ -4,10 +4,10 @@ var insertRow = function(index, url, title, time){
     var tbody = $( "#history_list").find('tbody');
     var num = index;
     var html = "<tr><th scope='row'>" + num + "</th>";
-    html += "<td>" + url + "</td>";
-    html += "<td>" + title + "</td>";
-    html += "<td>" + time + "</td></tr>";
-    //html += "<td><a href='#' class='delete_link'>X</a></td></tr>";
+    html += "<td>" + time + "</td>";
+    //html += "<td>" + title + "</td>";
+    html += "<td><a target='_blank' href='" + url + "'>" + title + "</a></td></tr>";
+    //html += "<td><a target='_blank' href='#' class='delete_link'>X</a></td></tr>";
     tbody.append(html);
 }
 
@@ -19,8 +19,8 @@ var onUpdTbl = function(){
     for( var i = 0; i < searchResults.length; ++i){
         var url = searchResults[i].url;
         var title = searchResults[i].title;
-        var time = searchResults[i].lastVisitTime;
-        insertRow(i, url, title, time);
+        var time = searchResults[i].date;
+        insertRow(i+1, url, title, time);
     }
 }
 
@@ -35,17 +35,31 @@ var onSearch = function() {
     var from = $("#datepicker1").val();
     var to = $("#datepicker2").val();
     //alert(from);
+    chrome.storage.sync.get(['username', 'password', 'server'], function(auths){
+        var content = {
+            'start': from,
+            'end': to,
+            'username': auths.username,
+            'password': auths.password
+        };
+
+        $.get(auths.server, content, function(data){
+            //alert(data);
+            searchResults = []
+            for(var i = 0; i < data.length; ++i){
+                searchResults.push(data[i]);
+            }
+            //alert(JSON.stringify(searchResults));
+            onUpdTbl();
+        });
+    });
     chrome.history.search({
         'text':'',
         'startTime':dateStrToTime(from),
         'endTime':dateStrToTime(to),
         'maxResults':100000
     }, function(historyItems){
-        for(var i = 0; i < historyItems.length; ++i){
-            searchResults.push(historyItems[i]);
-        }
-        alert(JSON.stringify(searchResults));
-        onUpdTbl();
+
     });
 }
 
