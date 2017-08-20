@@ -65,10 +65,10 @@ var onSearch = function() {
 
 var initDate = function () {
     var d = new Date();
-    d.setDate(d.getDate() - 8);
+    d.setDate(d.getDate() - 0);
     $("#datepicker1").val(d.toISOString().substr(0, 10));
 
-    d.setDate(d.getDate() + 7);
+    d.setDate(d.getDate() + 0);
     $("#datepicker2").val(d.toISOString().substr(0, 10));
 
     $("#search").click(onSearch);
